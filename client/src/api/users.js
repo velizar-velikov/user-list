@@ -8,7 +8,8 @@ const endpoints = {
 };
 
 export async function getAllUsers() {
-    return get(BASE_URL + endpoints.all);
+    const usersData = await get(BASE_URL + endpoints.all);
+    return Object.values(usersData);
 }
 
 export async function getUserById(id) {
@@ -60,9 +61,9 @@ export async function getSortedUsers(criteria, isAscending) {
 
     function sortUsers(a, b) {
         if (isAscending) {
-            a[criteria].localeCompare(b[criteria]);
+            return a[criteria].localeCompare(b[criteria]);
         } else {
-            b[criteria].localeCompare(a[criteria]);
+            return b[criteria].localeCompare(a[criteria]);
         }
     }
     return users.sort(sortUsers);
@@ -78,6 +79,10 @@ export async function getUsersPagination(itemsPerPage, page) {
 
     const startIndex = (page - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
+
+    if (startIndex < 0 || endIndex > users.length - 1) {
+        throw new Error('Invalid page');
+    }
 
     return users.slice(startIndex, endIndex);
 }
