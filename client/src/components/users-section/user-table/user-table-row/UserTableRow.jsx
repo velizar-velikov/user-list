@@ -1,4 +1,6 @@
-export default function UserTableRow() {
+import { formatDate } from '../../../../util/dateFormatter.js';
+
+export default function UserTableRow({ user }) {
     return (
         <tr>
             <td>
@@ -8,11 +10,11 @@ export default function UserTableRow() {
                     className="image"
                 />
             </td>
-            <td>Peter</td>
-            <td>Johnson</td>
-            <td>peter@abv.bg</td>
-            <td>0812345678</td>
-            <td>June 28, 2022</td>
+            <td>{user.firstName}</td>
+            <td>{user.lastName}</td>
+            <td>{user.email}</td>
+            <td>{user.phoneNumber}</td>
+            <td>{formatDate(user.createdAt)}</td>
             <td className="actions">
                 <button className="btn edit-btn" title="Edit">
                     <svg

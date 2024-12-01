@@ -17,7 +17,9 @@ export async function getUserById(id) {
 }
 
 export async function createUser(data) {
-    return post(BASE_URL + endpoints.all, data);
+    // server does not automatically generate these properties
+    const date = new Date().toISOString();
+    return post(BASE_URL + endpoints.all, { ...data, createdAt: date, updatedAt: date });
 }
 
 export async function updateUser(id, data) {

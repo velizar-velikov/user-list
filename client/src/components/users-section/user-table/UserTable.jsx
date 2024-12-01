@@ -1,6 +1,6 @@
 import UserTableRow from './user-table-row/UserTableRow.jsx';
 
-export default function UserTable() {
+export default function UserTable({ users }) {
     return (
         <table className="table">
             <thead>
@@ -100,10 +100,9 @@ export default function UserTable() {
                 </tr>
             </thead>
             <tbody>
-                {/* Table row component */}
-                <UserTableRow />
-                <UserTableRow />
-                <UserTableRow />
+                {users.map((user) => (
+                    <UserTableRow key={user._id} user={user} />
+                ))}
             </tbody>
         </table>
     );
