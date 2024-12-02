@@ -28,7 +28,7 @@ export default function UsersSection({ onAddHandler }) {
     const [showDetails, setShowDetails] = useState(false);
     const [isCreate, setIsCreate] = useState(false); // if false we show edit page
 
-    const [isAscending, setIsAscending] = useState(false);
+    const [isAscendingState, setIsAscendingState] = useState(true);
 
     useEffect(() => {
         async function loadUsers() {
@@ -151,11 +151,20 @@ export default function UsersSection({ onAddHandler }) {
         setUsers((oldUsers) => oldUsers.toSpliced(deletedUserIndex, 1));
     }
 
-    async function onSortPress(event) {
+    function onSortPress(event) {
         event.preventDefault();
         const criteria = event.currentTarget.dataset.criteria;
+        const isAscending = isAscendingState;
 
-        console.log(criteria);
+        // TODO: fix sorting by createdAt, as it is sorting in alphabetical order, not by date
+        const sortedUsers = users.toSorted((a, b) => {
+            if (isAscending) {
+                return a[criteria].localeCompare(b[criteria]);
+            }
+            return b[criteria].localeCompare(a[criteria]);
+        });
+
+        setUsers((oldUsers) => sortedUsers);
     }
 
     return (
@@ -181,6 +190,7 @@ export default function UsersSection({ onAddHandler }) {
                     onCloseInfoPress={onCloseInfoPress}
                     onDeletePress={onDeletePress}
                     onSortPress={onSortPress}
+                    setIsAscendingState={setIsAscendingState}
                 />
             </div>
 

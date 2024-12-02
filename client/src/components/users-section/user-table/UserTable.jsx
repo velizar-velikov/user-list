@@ -1,17 +1,37 @@
 import UserTableHeaderCell from './user-table-header-cell/UserTableHeaderCell.jsx';
 import UserTableRow from './user-table-row/UserTableRow.jsx';
 
-export default function UserTable({ users, onEditPress, onInfoPress, onDeletePress, onSortPress }) {
+export default function UserTable({ users, onEditPress, onInfoPress, onDeletePress, onSortPress, setIsAscendingState }) {
     return (
         <table className="table">
             <thead>
                 <tr>
                     <th>Image</th>
-                    <UserTableHeaderCell criteriaName={'firstName'} onSortPress={onSortPress} />
-                    <UserTableHeaderCell criteriaName={'lastName'} onSortPress={onSortPress} />
-                    <UserTableHeaderCell criteriaName={'email'} onSortPress={onSortPress} />
-                    <UserTableHeaderCell criteriaName={'phoneNumber'} onSortPress={onSortPress} />
-                    <UserTableHeaderCell criteriaName={'createdAt'} onSortPress={onSortPress} />
+                    <UserTableHeaderCell
+                        criteriaName={'firstName'}
+                        onSortPress={onSortPress}
+                        setIsAscendingState={setIsAscendingState}
+                    />
+                    <UserTableHeaderCell
+                        criteriaName={'lastName'}
+                        onSortPress={onSortPress}
+                        setIsAscendingState={setIsAscendingState}
+                    />
+                    <UserTableHeaderCell
+                        criteriaName={'email'}
+                        onSortPress={onSortPress}
+                        setIsAscendingState={setIsAscendingState}
+                    />
+                    <UserTableHeaderCell
+                        criteriaName={'phoneNumber'}
+                        onSortPress={onSortPress}
+                        setIsAscendingState={setIsAscendingState}
+                    />
+                    <UserTableHeaderCell
+                        criteriaName={'createdAt'}
+                        onSortPress={onSortPress}
+                        setIsAscendingState={setIsAscendingState}
+                    />
                     <th>Actions</th>
                 </tr>
             </thead>
