@@ -140,6 +140,7 @@ export default function UsersSection({ onAddHandler }) {
         setUsers(foundUsers);
     }
 
+    // TODO: show delete confirmation before deleting user
     async function onDeletePress(event) {
         event.preventDefault();
         const userId = event.currentTarget.parentElement.dataset.id;
