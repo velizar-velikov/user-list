@@ -1,6 +1,6 @@
 export default function NoSearchFound() {
     return (
-        <div class="table-overlap">
+        <div className="table-overlap">
             <svg
                 aria-hidden="true"
                 focusable="false"

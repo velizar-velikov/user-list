@@ -1,6 +1,23 @@
-export default function Search() {
+import { useState } from 'react';
+
+function CancelSearchButton({ onCancelSearch }) {
     return (
-        <form className="search-form">
+        <button onClick={onCancelSearch} type="button" className="btn close-btn">
+            <i className="fa-solid fa-xmark" />
+        </button>
+    );
+}
+
+export default function Search({ onSearchPress }) {
+    const [searchInput, setSearchInput] = useState('');
+
+    function onCancelSearch(e) {
+        e.preventDefault();
+        setSearchInput('');
+    }
+
+    return (
+        <form onSubmit={onSearchPress} className="search-form">
             <h2>
                 <svg
                     aria-hidden="true"
@@ -20,11 +37,15 @@ export default function Search() {
                 <span>Users</span>
             </h2>
             <div className="search-input-container">
-                <input type="text" placeholder="Please, select the search criteria" name="search" />
+                <input
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    value={searchInput}
+                    type="text"
+                    placeholder="Please, select the search criteria"
+                    name="search"
+                />
                 {/* Show the clear button only if input field length !== 0 */}
-                <button className="btn close-btn">
-                    <i className="fa-solid fa-xmark" />
-                </button>
+                {searchInput && <CancelSearchButton onCancelSearch={onCancelSearch} />}
                 <button className="btn" title="Please, select the search criteria">
                     <i className="fa-solid fa-magnifying-glass" />
                 </button>
@@ -33,10 +54,10 @@ export default function Search() {
                 <span>Search Criteria:</span>
                 <select name="criteria" className="criteria">
                     <option value="">Not selected</option>
-                    <option value="">First Name</option>
-                    <option value="">Last Name</option>
-                    <option value="">Email</option>
-                    <option value="">Phone</option>
+                    <option value="firstName">First Name</option>
+                    <option value="lastName">Last Name</option>
+                    <option value="email">Email</option>
+                    <option value="phoneNumber">Phone</option>
                 </select>
             </div>
         </form>

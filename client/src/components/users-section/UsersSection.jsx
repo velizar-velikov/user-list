@@ -8,18 +8,18 @@ import UserTable from './user-table/UserTable.jsx';
 import Pagination from '../pagination/Pagination.jsx';
 import LoadingSpinner from './loading-spinner/LoadingSpinner.jsx';
 
-import { createUser, getAllUsers, getUserById, updateUser } from '../../api/users.js';
+import { createUser, getAllUsers, getUserById, searchUsers, updateUser } from '../../api/users.js';
 import CreateEdit from '../create-edit/CreateEdit.jsx';
 import { createUserObject } from '../../util/createUserObject.js';
 import UserDetails from '../user-details/UserDetails.jsx';
 
 export default function UsersSection({ onAddHandler }) {
     const [users, setUsers] = useState([]);
-    // const [userDetails, setUserDetails] = useState({});
 
     const [noUsersYet, setNoUsersYet] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [hasFetchFailed, setHasFetchFailed] = useState(false);
+    const [noSearchFound, setNoSearchFound] = useState(false);
 
     const [showAdd, setShowAdd] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
@@ -108,6 +108,29 @@ export default function UsersSection({ onAddHandler }) {
         setShowAdd(false);
     }
 
+    async function onSearchPress(event) {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const { search, criteria } = Object.fromEntries(formData);
+
+        if (!search && !criteria) {
+            const allUsers = await getAllUsers();
+            setUsers(allUsers);
+            return;
+        }
+
+        if (!criteria) {
+            alert('Please choose criteria first');
+            return;
+        }
+
+        const foundUsers = await searchUsers(criteria, search);
+        if (foundUsers.length == 0) {
+            setNoSearchFound(true);
+        }
+        setUsers(foundUsers);
+    }
+
     async function onCloseInfoPress(event) {
         event.preventDefault();
         setShowDetails(false);
@@ -115,7 +138,7 @@ export default function UsersSection({ onAddHandler }) {
 
     return (
         <section className="card users-container">
-            <Search />
+            <Search onSearchPress={onSearchPress} />
 
             {/* Table component */}
             <div className="table-wrapper">
@@ -125,8 +148,7 @@ export default function UsersSection({ onAddHandler }) {
 
                 {noUsersYet && <NoUsersYet />}
 
-                {/* No content overlap component  */}
-                {/* <NoSearchFound /> */}
+                {noSearchFound && <NoSearchFound />}
 
                 {hasFetchFailed && <ErrorFetch />}
 
