@@ -1,9 +1,9 @@
 import Header from './components/header/Header.jsx';
 import UsersSection from './components/users-section/UsersSection.jsx';
 import UserDetails from './components/user-details/UserDetails.jsx';
-import CreateEdit from './components/create-edit/CreateEdit.jsx';
 import Delete from './components/delete/Delete.jsx';
 import Footer from './components/footer/Footer.jsx';
+import { useState } from 'react';
 
 function App() {
     return (
@@ -17,9 +17,6 @@ function App() {
 
                 {/* User details component  */}
                 {/* <UserDetails /> */}
-
-                {/* Create/Edit Form component  */}
-                {/* <CreateEdit /> */}
 
                 {/* Delete user component  */}
                 {/* <Delete /> */}

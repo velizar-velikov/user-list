@@ -5,7 +5,8 @@ async function request(url, options) {
 
         return data;
     } catch (error) {
-        alert(errror.message);
+        alert(error.message);
+        throw new Error(error.message);
     }
 }
 

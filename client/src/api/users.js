@@ -23,6 +23,11 @@ export async function createUser(data) {
 }
 
 export async function updateUser(id, data) {
+    const user = await getUserById(id);
+
+    data.createdAt = user.createdAt;
+    data.updatedAt = new Date().toISOString();
+
     return put(BASE_URL + endpoints.one(id), data);
 }
 
