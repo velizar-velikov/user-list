@@ -1,12 +1,12 @@
-export default function Delete() {
+export default function Delete({ onDeleteUser, setShowDelete }) {
     return (
         <div class="overlay">
-            <div class="backdrop"></div>
+            <div onClick={() => setShowDelete(false)} class="backdrop"></div>
             <div class="modal">
                 <div class="confirm-container">
                     <header class="headers">
                         <h2>Are you sure you want to delete this account?</h2>
-                        <button class="btn close">
+                        <button onClick={() => setShowDelete(false)} class="btn close">
                             <svg
                                 aria-hidden="true"
                                 focusable="false"
@@ -26,10 +26,10 @@ export default function Delete() {
                     </header>
                     <div class="actions">
                         <div id="form-actions">
-                            <button id="action-save" class="btn" type="submit">
+                            <button onClick={onDeleteUser} id="action-save" class="btn" type="submit">
                                 Delete
                             </button>
-                            <button id="action-cancel" class="btn" type="button">
+                            <button onClick={() => setShowDelete(false)} id="action-cancel" class="btn" type="button">
                                 Cancel
                             </button>
                         </div>

@@ -14,6 +14,7 @@ import Pagination from '../pagination/Pagination.jsx';
 import { createUser, deleteUser, getAllUsers, getUserById, searchUsers, updateUser } from '../../api/users.js';
 import { createUserObject } from '../../util/createUserObject.js';
 import { useUserInfo } from '../../hooks/useUserInfo.jsx';
+import Delete from '../delete/Delete.jsx';
 
 export default function UsersSection({ onAddHandler }) {
     const { users, isLoading, noUsersYet, hasFetchFailed, setUsers } = useLoadUsers();
@@ -24,6 +25,7 @@ export default function UsersSection({ onAddHandler }) {
     // show pages state
     const [showAdd, setShowAdd] = useState(false);
     const [isCreate, setIsCreate] = useState(false); // if false we show edit page
+    const [showDelete, setShowDelete] = useState(false);
 
     const [isAscendingState, setIsAscendingState] = useState(true);
 
@@ -47,7 +49,6 @@ export default function UsersSection({ onAddHandler }) {
     }
 
     function onCloseHandler(event) {
-        event.preventDefault();
         setShowAdd(false);
     }
 
@@ -113,16 +114,15 @@ export default function UsersSection({ onAddHandler }) {
         setUsers(foundUsers);
     }
 
-    // TODO: show delete confirmation before deleting user
-    async function onDeletePress(event) {
-        event.preventDefault();
+    // TODO: manage to get the current userId to delete it
+    async function onDeleteUser(event) {
         const userId = event.currentTarget.parentElement.dataset.id;
 
         await deleteUser(userId);
 
         const deletedUserIndex = users.findIndex((user) => user._id == userId);
-
         setUsers((oldUsers) => oldUsers.toSpliced(deletedUserIndex, 1));
+        setShowDelete(false);
     }
 
     function onSortPress(event) {
@@ -156,12 +156,14 @@ export default function UsersSection({ onAddHandler }) {
 
                 {hasFetchFailed && <ErrorFetch />}
 
+                {showDelete && <Delete onDeleteUser={onDeleteUser} setShowDelete={setShowDelete} />}
+
                 <UserTable
                     users={users}
                     onEditPress={onEditPress}
                     onInfoPress={onInfoPress}
                     onCloseInfoPress={onCloseInfoPress}
-                    onDeletePress={onDeletePress}
+                    setShowDelete={setShowDelete}
                     onSortPress={onSortPress}
                     setIsAscendingState={setIsAscendingState}
                 />

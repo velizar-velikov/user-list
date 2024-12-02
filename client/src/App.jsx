@@ -10,9 +10,6 @@ function App() {
 
             <main className="main">
                 <UsersSection />
-
-                {/* Delete user component  */}
-                {/* <Delete /> */}
             </main>
 
             <Footer />
