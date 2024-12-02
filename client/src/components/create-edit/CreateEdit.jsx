@@ -1,18 +1,18 @@
 import { useState } from 'react';
-import { createUserObject } from '../../util/createUserObject.js';
 
 export default function CreateEdit({ user, onCloseHandler, onSaveNewUser, onSaveEditedUser, isCreate }) {
-    const [userValues, setUserValues] = useState(user);
+    const [firstName, setFirstName] = useState(user.firstName);
+    const [lastName, setLastName] = useState(user.lastName);
+    const [email, setEmail] = useState(user.email);
+    const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
+    const [imageUrl, setImageUrl] = useState(user.imageUrl);
+    const [country, setCountry] = useState(user.address?.country);
+    const [city, setCity] = useState(user.address?.city);
+    const [street, setStreet] = useState(user.address?.street);
+    const [streetNumber, setStreetNumber] = useState(user.address?.streetNumber);
 
-    function updateUserValues(event) {
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        const data = Object.fromEntries(formData);
+    // TODO: think of e solution that does not render create form with undefined values(omits the value attr altogether)
 
-        const userObject = createUserObject(user._id, data);
-
-        setUserValues(userObject);
-    }
     return (
         <div className="overlay">
             <div onClick={onCloseHandler} className="backdrop"></div>
@@ -38,11 +38,7 @@ export default function CreateEdit({ user, onCloseHandler, onSaveNewUser, onSave
                             </svg>
                         </button>
                     </header>
-                    <form
-                        onSubmit={isCreate ? onSaveNewUser : onSaveEditedUser}
-                        data-id={userValues._id}
-                        onChange={updateUserValues}
-                    >
+                    <form onSubmit={isCreate ? onSaveNewUser : onSaveEditedUser} data-id={user?._id}>
                         <div className="form-row">
                             <div className="form-group">
                                 <label htmlFor="firstName">First name</label>
@@ -50,7 +46,13 @@ export default function CreateEdit({ user, onCloseHandler, onSaveNewUser, onSave
                                     <span>
                                         <i className="fa-solid fa-user"></i>
                                     </span>
-                                    <input id="firstName" name="firstName" type="text" value={userValues.firstName} />
+                                    <input
+                                        onChange={(event) => setFirstName(event.target.value)}
+                                        id="firstName"
+                                        name="firstName"
+                                        type="text"
+                                        value={firstName}
+                                    />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -59,7 +61,13 @@ export default function CreateEdit({ user, onCloseHandler, onSaveNewUser, onSave
                                     <span>
                                         <i className="fa-solid fa-user"></i>
                                     </span>
-                                    <input id="lastName" name="lastName" type="text" value={userValues.lastName} />
+                                    <input
+                                        onChange={(event) => setLastName(event.target.value)}
+                                        id="lastName"
+                                        name="lastName"
+                                        type="text"
+                                        value={lastName}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -71,7 +79,13 @@ export default function CreateEdit({ user, onCloseHandler, onSaveNewUser, onSave
                                     <span>
                                         <i className="fa-solid fa-envelope"></i>
                                     </span>
-                                    <input id="email" name="email" type="text" value={userValues.email} />
+                                    <input
+                                        onChange={(event) => setEmail(event.target.value)}
+                                        id="email"
+                                        name="email"
+                                        type="text"
+                                        value={email}
+                                    />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -80,7 +94,13 @@ export default function CreateEdit({ user, onCloseHandler, onSaveNewUser, onSave
                                     <span>
                                         <i className="fa-solid fa-phone"></i>
                                     </span>
-                                    <input id="phoneNumber" name="phoneNumber" type="text" value={userValues.phoneNumber} />
+                                    <input
+                                        onChange={(event) => setPhoneNumber(event.target.value)}
+                                        id="phoneNumber"
+                                        name="phoneNumber"
+                                        type="text"
+                                        value={phoneNumber}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -91,7 +111,13 @@ export default function CreateEdit({ user, onCloseHandler, onSaveNewUser, onSave
                                 <span>
                                     <i className="fa-solid fa-image"></i>
                                 </span>
-                                <input id="imageUrl" name="imageUrl" type="text" value={userValues.imageUrl} />
+                                <input
+                                    onChange={(event) => setImageUrl(event.target.value)}
+                                    id="imageUrl"
+                                    name="imageUrl"
+                                    type="text"
+                                    value={imageUrl}
+                                />
                             </div>
                         </div>
 
@@ -102,7 +128,13 @@ export default function CreateEdit({ user, onCloseHandler, onSaveNewUser, onSave
                                     <span>
                                         <i className="fa-solid fa-map"></i>
                                     </span>
-                                    <input id="country" name="country" type="text" value={userValues.address?.country} />
+                                    <input
+                                        onChange={(event) => setCountry(event.target.value)}
+                                        id="country"
+                                        name="country"
+                                        type="text"
+                                        value={country}
+                                    />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -111,7 +143,13 @@ export default function CreateEdit({ user, onCloseHandler, onSaveNewUser, onSave
                                     <span>
                                         <i className="fa-solid fa-city"></i>
                                     </span>
-                                    <input id="city" name="city" type="text" value={userValues.address?.city} />
+                                    <input
+                                        onChange={(event) => setCity(event.target.value)}
+                                        id="city"
+                                        name="city"
+                                        type="text"
+                                        value={city}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -123,7 +161,13 @@ export default function CreateEdit({ user, onCloseHandler, onSaveNewUser, onSave
                                     <span>
                                         <i className="fa-solid fa-map"></i>
                                     </span>
-                                    <input id="street" name="street" type="text" value={userValues.address?.street} />
+                                    <input
+                                        onChange={(event) => setStreet(event.target.value)}
+                                        id="street"
+                                        name="street"
+                                        type="text"
+                                        value={street}
+                                    />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -133,10 +177,11 @@ export default function CreateEdit({ user, onCloseHandler, onSaveNewUser, onSave
                                         <i className="fa-solid fa-house-chimney"></i>
                                     </span>
                                     <input
+                                        onChange={(event) => setStreetNumber(event.target.value)}
                                         id="streetNumber"
                                         name="streetNumber"
                                         type="text"
-                                        value={userValues.address?.streetNumber}
+                                        value={streetNumber}
                                     />
                                 </div>
                             </div>
