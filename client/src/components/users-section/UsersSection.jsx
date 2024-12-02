@@ -1,32 +1,32 @@
 import { useEffect, useState } from 'react';
 
 import Search from '../search/Search.jsx';
+import LoadingSpinner from './loading-spinner/LoadingSpinner.jsx';
 import NoUsersYet from './no-users-yet/NoUsersYet.jsx';
 import NoSearchFound from './no-search-found/NoSearchFound.jsx';
 import ErrorFetch from './error-fetch/ErrorFetch.jsx';
 import UserTable from './user-table/UserTable.jsx';
+import CreateEdit from '../create-edit/CreateEdit.jsx';
+import UserDetails from '../user-details/UserDetails.jsx';
 import Pagination from '../pagination/Pagination.jsx';
-import LoadingSpinner from './loading-spinner/LoadingSpinner.jsx';
 
 import { createUser, getAllUsers, getUserById, searchUsers, updateUser } from '../../api/users.js';
-import CreateEdit from '../create-edit/CreateEdit.jsx';
 import { createUserObject } from '../../util/createUserObject.js';
-import UserDetails from '../user-details/UserDetails.jsx';
 
 export default function UsersSection({ onAddHandler }) {
     const [users, setUsers] = useState([]);
+    const [userData, setUserData] = useState({});
 
+    // errors and loading state
     const [noUsersYet, setNoUsersYet] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [hasFetchFailed, setHasFetchFailed] = useState(false);
     const [noSearchFound, setNoSearchFound] = useState(false);
 
+    // show pages state
     const [showAdd, setShowAdd] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
-
-    const [isCreate, setIsCreate] = useState(false);
-
-    const [userData, setUserData] = useState({});
+    const [isCreate, setIsCreate] = useState(false); // if false we show edit page
 
     useEffect(() => {
         async function loadUsers() {
@@ -45,6 +45,7 @@ export default function UsersSection({ onAddHandler }) {
         loadUsers();
     }, []);
 
+    // show pages handlers
     function onAddHandler(event) {
         event.preventDefault();
         setIsCreate(true);
@@ -72,11 +73,17 @@ export default function UsersSection({ onAddHandler }) {
         setShowDetails(true);
     }
 
+    async function onCloseInfoPress(event) {
+        event.preventDefault();
+        setShowDetails(false);
+    }
+
     function onCloseHandler(event) {
         event.preventDefault();
         setShowAdd(false);
     }
 
+    // handlers communicating with api
     async function onSaveNewUser(event) {
         event.preventDefault();
         const formData = new FormData(event.target);
@@ -129,11 +136,6 @@ export default function UsersSection({ onAddHandler }) {
             setNoSearchFound(true);
         }
         setUsers(foundUsers);
-    }
-
-    async function onCloseInfoPress(event) {
-        event.preventDefault();
-        setShowDetails(false);
     }
 
     return (
