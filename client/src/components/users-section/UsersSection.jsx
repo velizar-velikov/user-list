@@ -28,6 +28,8 @@ export default function UsersSection({ onAddHandler }) {
     const [showDetails, setShowDetails] = useState(false);
     const [isCreate, setIsCreate] = useState(false); // if false we show edit page
 
+    const [isAscending, setIsAscending] = useState(false);
+
     useEffect(() => {
         async function loadUsers() {
             try {
@@ -142,12 +144,18 @@ export default function UsersSection({ onAddHandler }) {
         event.preventDefault();
         const userId = event.currentTarget.parentElement.dataset.id;
 
-        console.log(userId);
         await deleteUser(userId);
 
         const deletedUserIndex = users.findIndex((user) => user._id == userId);
 
         setUsers((oldUsers) => oldUsers.toSpliced(deletedUserIndex, 1));
+    }
+
+    async function onSortPress(event) {
+        event.preventDefault();
+        const criteria = event.currentTarget.dataset.criteria;
+
+        console.log(criteria);
     }
 
     return (
@@ -172,6 +180,7 @@ export default function UsersSection({ onAddHandler }) {
                     onInfoPress={onInfoPress}
                     onCloseInfoPress={onCloseInfoPress}
                     onDeletePress={onDeletePress}
+                    onSortPress={onSortPress}
                 />
             </div>
 
