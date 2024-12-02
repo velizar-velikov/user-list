@@ -10,7 +10,7 @@ import CreateEdit from '../create-edit/CreateEdit.jsx';
 import UserDetails from '../user-details/UserDetails.jsx';
 import Pagination from '../pagination/Pagination.jsx';
 
-import { createUser, getAllUsers, getUserById, searchUsers, updateUser } from '../../api/users.js';
+import { createUser, deleteUser, getAllUsers, getUserById, searchUsers, updateUser } from '../../api/users.js';
 import { createUserObject } from '../../util/createUserObject.js';
 
 export default function UsersSection({ onAddHandler }) {
@@ -138,6 +138,18 @@ export default function UsersSection({ onAddHandler }) {
         setUsers(foundUsers);
     }
 
+    async function onDeletePress(event) {
+        event.preventDefault();
+        const userId = event.currentTarget.parentElement.dataset.id;
+
+        console.log(userId);
+        await deleteUser(userId);
+
+        const deletedUserIndex = users.findIndex((user) => user._id == userId);
+
+        setUsers((oldUsers) => oldUsers.toSpliced(deletedUserIndex, 1));
+    }
+
     return (
         <section className="card users-container">
             <Search onSearchPress={onSearchPress} />
@@ -159,6 +171,7 @@ export default function UsersSection({ onAddHandler }) {
                     onEditPress={onEditPress}
                     onInfoPress={onInfoPress}
                     onCloseInfoPress={onCloseInfoPress}
+                    onDeletePress={onDeletePress}
                 />
             </div>
 

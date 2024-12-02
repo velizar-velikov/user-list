@@ -1,6 +1,6 @@
 import { formatDate } from '../../../../util/dateFormatter.js';
 
-export default function UserTableRow({ user, onEditPress, onInfoPress }) {
+export default function UserTableRow({ user, onEditPress, onInfoPress, onDeletePress }) {
     return (
         <tr>
             <td>
@@ -33,7 +33,7 @@ export default function UserTableRow({ user, onEditPress, onInfoPress }) {
                         ></path>
                     </svg>
                 </button>
-                <button className="btn delete-btn" title="Delete">
+                <button onClick={onDeletePress} className="btn delete-btn" title="Delete">
                     <svg
                         aria-hidden="true"
                         focusable="false"
