@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useLoadUsers } from '../../hooks/useLoadUsers.jsx';
 
 import Search from '../search/Search.jsx';
 import LoadingSpinner from './loading-spinner/LoadingSpinner.jsx';
@@ -12,40 +13,19 @@ import Pagination from '../pagination/Pagination.jsx';
 
 import { createUser, deleteUser, getAllUsers, getUserById, searchUsers, updateUser } from '../../api/users.js';
 import { createUserObject } from '../../util/createUserObject.js';
+import { useUserInfo } from '../../hooks/useUserInfo.jsx';
 
 export default function UsersSection({ onAddHandler }) {
-    const [users, setUsers] = useState([]);
-    const [userData, setUserData] = useState({});
+    const { users, isLoading, noUsersYet, hasFetchFailed, setUsers } = useLoadUsers();
+    const { userData, showDetails, setUserData, onInfoPress, onCloseInfoPress } = useUserInfo();
 
-    // errors and loading state
-    const [noUsersYet, setNoUsersYet] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-    const [hasFetchFailed, setHasFetchFailed] = useState(false);
     const [noSearchFound, setNoSearchFound] = useState(false);
 
     // show pages state
     const [showAdd, setShowAdd] = useState(false);
-    const [showDetails, setShowDetails] = useState(false);
     const [isCreate, setIsCreate] = useState(false); // if false we show edit page
 
     const [isAscendingState, setIsAscendingState] = useState(true);
-
-    useEffect(() => {
-        async function loadUsers() {
-            try {
-                const responseUsers = await getAllUsers();
-                if (responseUsers.length == 0) {
-                    setNoUsersYet(true);
-                }
-
-                setUsers(responseUsers);
-            } catch (error) {
-                setHasFetchFailed(true);
-            }
-            setIsLoading(false);
-        }
-        loadUsers();
-    }, []);
 
     // show pages handlers
     function onAddHandler(event) {
@@ -64,20 +44,6 @@ export default function UsersSection({ onAddHandler }) {
         const user = await getUserById(userId);
         setShowAdd(true);
         setUserData(user);
-    }
-
-    async function onInfoPress(event) {
-        event.preventDefault();
-        const userId = event.currentTarget.parentElement.dataset.id;
-
-        const user = await getUserById(userId);
-        setUserData(user);
-        setShowDetails(true);
-    }
-
-    async function onCloseInfoPress(event) {
-        event.preventDefault();
-        setShowDetails(false);
     }
 
     function onCloseHandler(event) {
@@ -119,6 +85,8 @@ export default function UsersSection({ onAddHandler }) {
 
     async function onSearchPress(event) {
         event.preventDefault();
+        setNoSearchFound(false);
+
         const formData = new FormData(event.currentTarget);
         const { search, criteria } = Object.fromEntries(formData);
 
@@ -130,6 +98,11 @@ export default function UsersSection({ onAddHandler }) {
 
         if (!criteria) {
             alert('Please choose criteria first');
+            return;
+        }
+
+        if (!search) {
+            alert('Please enter search value');
             return;
         }
 
@@ -155,11 +128,10 @@ export default function UsersSection({ onAddHandler }) {
     function onSortPress(event) {
         event.preventDefault();
         const criteria = event.currentTarget.dataset.criteria;
-        const isAscending = isAscendingState;
 
         // TODO: fix sorting by createdAt, as it is sorting in alphabetical order, not by date
         const sortedUsers = users.toSorted((a, b) => {
-            if (isAscending) {
+            if (isAscendingState) {
                 return a[criteria].localeCompare(b[criteria]);
             }
             return b[criteria].localeCompare(a[criteria]);
