@@ -1,18 +1,22 @@
-export default function UserDetails() {
+import { formatDate } from '../../util/dateFormatter.js';
+
+export default function UserDetails({ user, onCloseInfoPress }) {
+    // TODO: fix date for createdAt and updatedAt in format "Wednesday, June 28, 2022"
+
     return (
-        <div class="overlay">
-            <div class="backdrop"></div>
-            <div class="modal">
-                <div class="detail-container">
-                    <header class="headers">
-                        <h2>User Detail</h2>
-                        <button class="btn close">
+        <div className="overlay">
+            <div onClick={onCloseInfoPress} className="backdrop"></div>
+            <div className="modal">
+                <div className="detail-container">
+                    <header className="headers">
+                        <h2>User Details</h2>
+                        <button onClick={onCloseInfoPress} className="btn close">
                             <svg
                                 aria-hidden="true"
                                 focusable="false"
                                 data-prefix="fas"
                                 data-icon="xmark"
-                                class="svg-inline--fa fa-xmark"
+                                className="svg-inline--fa fa-xmark"
                                 role="img"
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 320 512"
@@ -24,38 +28,41 @@ export default function UserDetails() {
                             </svg>
                         </button>
                     </header>
-                    <div class="content">
-                        <div class="image-container">
+                    <div className="content">
+                        <div className="image-container">
                             <img
                                 src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                 alt=""
-                                class="image"
+                                className="image"
                             />
                         </div>
-                        <div class="user-details">
+                        <div className="user-details">
                             <p>
-                                User Id: <strong>62bb0c0eda039e2fdccba57b</strong>
+                                User Id: <strong>{user._id}</strong>
                             </p>
                             <p>
                                 Full Name:
-                                <strong> Peter Johnson </strong>
+                                <strong> {user.firstName + ' ' + user.lastName} </strong>
                             </p>
                             <p>
-                                Email: <strong>peter@abv.bg</strong>
+                                Email: <strong>{user.email}</strong>
                             </p>
                             <p>
-                                Phone Number: <strong>0812345678</strong>
+                                Phone Number: <strong>{user.phoneNumber}</strong>
                             </p>
                             <p>
                                 Address:
-                                <strong> Bulgaria, Sofia, Aleksandar Malinov 78 </strong>
+                                <strong>
+                                    {' '}
+                                    {user.address.country}, {user.address.city}, {user.address.street} {user.address.streetNumber}{' '}
+                                </strong>
                             </p>
 
                             <p>
-                                Created on: <strong>Wednesday, June 28, 2022</strong>
+                                Created on: <strong>{formatDate(user.createdAt)}</strong>
                             </p>
                             <p>
-                                Modified on: <strong>Thursday, June 29, 2022</strong>
+                                Modified on: <strong>{formatDate(user.updatedAt)}</strong>
                             </p>
                         </div>
                     </div>

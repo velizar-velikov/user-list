@@ -1,6 +1,6 @@
 import UserTableRow from './user-table-row/UserTableRow.jsx';
 
-export default function UserTable({ users, onEditPress }) {
+export default function UserTable({ users, onEditPress, onInfoPress }) {
     return (
         <table className="table">
             <thead>
@@ -101,7 +101,7 @@ export default function UserTable({ users, onEditPress }) {
             </thead>
             <tbody>
                 {users.map((user) => (
-                    <UserTableRow key={user._id} user={user} onEditPress={onEditPress} />
+                    <UserTableRow key={user._id} user={user} onEditPress={onEditPress} onInfoPress={onInfoPress} />
                 ))}
             </tbody>
         </table>

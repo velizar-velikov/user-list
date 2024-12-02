@@ -15,9 +15,6 @@ function App() {
                 {/* Section component  */}
                 <UsersSection />
 
-                {/* User details component  */}
-                {/* <UserDetails /> */}
-
                 {/* Delete user component  */}
                 {/* <Delete /> */}
             </main>

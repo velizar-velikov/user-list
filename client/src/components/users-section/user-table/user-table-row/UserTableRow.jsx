@@ -1,6 +1,6 @@
 import { formatDate } from '../../../../util/dateFormatter.js';
 
-export default function UserTableRow({ user, onEditPress }) {
+export default function UserTableRow({ user, onEditPress, onInfoPress }) {
     return (
         <tr>
             <td>
@@ -15,8 +15,8 @@ export default function UserTableRow({ user, onEditPress }) {
             <td>{user.email}</td>
             <td>{user.phoneNumber}</td>
             <td>{formatDate(user.createdAt)}</td>
-            <td className="actions">
-                <button onClick={onEditPress} className="btn edit-btn" title="Edit" data-id={user._id}>
+            <td className="actions" data-id={user._id}>
+                <button onClick={onEditPress} className="btn edit-btn" title="Edit">
                     <svg
                         aria-hidden="true"
                         focusable="false"
@@ -50,7 +50,7 @@ export default function UserTableRow({ user, onEditPress }) {
                         ></path>
                     </svg>
                 </button>
-                <button className="btn info-btn" title="Info">
+                <button onClick={onInfoPress} className="btn info-btn" title="Info">
                     <svg
                         aria-hidden="true"
                         focusable="false"

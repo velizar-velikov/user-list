@@ -11,13 +11,18 @@ import LoadingSpinner from './loading-spinner/LoadingSpinner.jsx';
 import { createUser, getAllUsers, getUserById, updateUser } from '../../api/users.js';
 import CreateEdit from '../create-edit/CreateEdit.jsx';
 import { createUserObject } from '../../util/createUserObject.js';
+import UserDetails from '../user-details/UserDetails.jsx';
 
 export default function UsersSection({ onAddHandler }) {
     const [users, setUsers] = useState([]);
+    // const [userDetails, setUserDetails] = useState({});
+
     const [noUsersYet, setNoUsersYet] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [hasFetchFailed, setHasFetchFailed] = useState(false);
+
     const [showAdd, setShowAdd] = useState(false);
+    const [showDetails, setShowDetails] = useState(false);
 
     const [isCreate, setIsCreate] = useState(false);
 
@@ -49,13 +54,22 @@ export default function UsersSection({ onAddHandler }) {
 
     async function onEditPress(event) {
         event.preventDefault();
-        const userId = event.currentTarget.dataset.id;
+        const userId = event.currentTarget.parentElement.dataset.id;
 
         setIsCreate(false);
 
         const user = await getUserById(userId);
         setShowAdd(true);
         setUserData(user);
+    }
+
+    async function onInfoPress(event) {
+        event.preventDefault();
+        const userId = event.currentTarget.parentElement.dataset.id;
+
+        const user = await getUserById(userId);
+        setUserData(user);
+        setShowDetails(true);
     }
 
     function onCloseHandler(event) {
@@ -94,6 +108,11 @@ export default function UsersSection({ onAddHandler }) {
         setShowAdd(false);
     }
 
+    async function onCloseInfoPress(event) {
+        event.preventDefault();
+        setShowDetails(false);
+    }
+
     return (
         <section className="card users-container">
             <Search />
@@ -111,7 +130,12 @@ export default function UsersSection({ onAddHandler }) {
 
                 {hasFetchFailed && <ErrorFetch />}
 
-                <UserTable users={users} onEditPress={onEditPress} />
+                <UserTable
+                    users={users}
+                    onEditPress={onEditPress}
+                    onInfoPress={onInfoPress}
+                    onCloseInfoPress={onCloseInfoPress}
+                />
             </div>
 
             {showAdd && (
@@ -123,6 +147,8 @@ export default function UsersSection({ onAddHandler }) {
                     isCreate={isCreate}
                 />
             )}
+
+            {showDetails && <UserDetails user={userData} onCloseInfoPress={onCloseInfoPress} />}
 
             <button onClick={onAddHandler} className="btn-add btn">
                 Add new user
