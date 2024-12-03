@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 export default function Delete() {
     return (
         <div class="overlay">
@@ -7,12 +8,23 @@ export default function Delete() {
                     <header class="headers">
                         <h2>Are you sure you want to delete this account?</h2>
                         <button class="btn close">
+=======
+export default function Delete({ onDeleteUser, cancelDelete }) {
+    return (
+        <div className="overlay">
+            <div onClick={cancelDelete} className="backdrop"></div>
+            <div className="modal">
+                <div className="confirm-container">
+                    <header className="headers">
+                        <h2>Are you sure you want to delete this account?</h2>
+                        <button onClick={cancelDelete} className="btn close">
+>>>>>>> Stashed changes
                             <svg
                                 aria-hidden="true"
                                 focusable="false"
                                 data-prefix="fas"
                                 data-icon="xmark"
-                                class="svg-inline--fa fa-xmark"
+                                className="svg-inline--fa fa-xmark"
                                 role="img"
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 320 512"
@@ -24,12 +36,19 @@ export default function Delete() {
                             </svg>
                         </button>
                     </header>
-                    <div class="actions">
+                    <div className="actions">
                         <div id="form-actions">
+<<<<<<< Updated upstream
                             <button id="action-save" class="btn" type="submit">
                                 Delete
                             </button>
                             <button id="action-cancel" class="btn" type="button">
+=======
+                            <button onClick={onDeleteUser} id="action-save" className="btn" type="submit">
+                                Delete
+                            </button>
+                            <button onClick={cancelDelete} id="action-cancel" className="btn" type="button">
+>>>>>>> Stashed changes
                                 Cancel
                             </button>
                         </div>

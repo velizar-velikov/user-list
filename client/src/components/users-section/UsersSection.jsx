@@ -12,10 +12,21 @@ import Pagination from '../pagination/Pagination.jsx';
 
 import { createUser, deleteUser, getAllUsers, getUserById, searchUsers, updateUser } from '../../api/users.js';
 import { createUserObject } from '../../util/createUserObject.js';
+<<<<<<< Updated upstream
 
 export default function UsersSection({ onAddHandler }) {
     const [users, setUsers] = useState([]);
     const [userData, setUserData] = useState({});
+=======
+import { useUserInfo } from '../../hooks/useUserInfo.jsx';
+import Delete from '../delete/Delete.jsx';
+import { useDelete } from '../../hooks/useDelete.jsx';
+
+export default function UsersSection({ onAddHandler }) {
+    const { users, isLoading, noUsersYet, hasFetchFailed, setUsers } = useLoadUsers();
+    const { userData, showDetails, setUserData, onInfoPress, onCloseInfoPress } = useUserInfo();
+    const { showDelete, onDeletePress, onDeleteUser, cancelDelete } = useDelete(users, setUsers);
+>>>>>>> Stashed changes
 
     // errors and loading state
     const [noUsersYet, setNoUsersYet] = useState(false);
@@ -48,15 +59,13 @@ export default function UsersSection({ onAddHandler }) {
     }, []);
 
     // show pages handlers
-    function onAddHandler(event) {
-        event.preventDefault();
+    function onAddHandler() {
         setIsCreate(true);
         setUserData({});
         setShowAdd(true);
     }
 
     async function onEditPress(event) {
-        event.preventDefault();
         const userId = event.currentTarget.parentElement.dataset.id;
 
         setIsCreate(false);
@@ -66,6 +75,7 @@ export default function UsersSection({ onAddHandler }) {
         setUserData(user);
     }
 
+<<<<<<< Updated upstream
     async function onInfoPress(event) {
         event.preventDefault();
         const userId = event.currentTarget.parentElement.dataset.id;
@@ -82,6 +92,9 @@ export default function UsersSection({ onAddHandler }) {
 
     function onCloseHandler(event) {
         event.preventDefault();
+=======
+    function onCloseHandler() {
+>>>>>>> Stashed changes
         setShowAdd(false);
     }
 
@@ -140,6 +153,7 @@ export default function UsersSection({ onAddHandler }) {
         setUsers(foundUsers);
     }
 
+<<<<<<< Updated upstream
     // TODO: show delete confirmation before deleting user
     async function onDeletePress(event) {
         event.preventDefault();
@@ -152,6 +166,8 @@ export default function UsersSection({ onAddHandler }) {
         setUsers((oldUsers) => oldUsers.toSpliced(deletedUserIndex, 1));
     }
 
+=======
+>>>>>>> Stashed changes
     function onSortPress(event) {
         event.preventDefault();
         const criteria = event.currentTarget.dataset.criteria;
@@ -184,6 +200,11 @@ export default function UsersSection({ onAddHandler }) {
 
                 {hasFetchFailed && <ErrorFetch />}
 
+<<<<<<< Updated upstream
+=======
+                {showDelete && <Delete onDeleteUser={onDeleteUser} cancelDelete={cancelDelete} />}
+
+>>>>>>> Stashed changes
                 <UserTable
                     users={users}
                     onEditPress={onEditPress}
