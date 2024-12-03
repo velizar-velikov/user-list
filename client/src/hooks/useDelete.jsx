@@ -8,19 +8,18 @@ export function useDelete(users, setUsers) {
     async function onDeletePress(event) {
         setShowDelete(true);
         const userId = event.currentTarget.parentElement.dataset.id;
-        const user = await getUserById(userId);
+        const user = users.find((user) => user._id == userId);
         setUser(user);
     }
 
-    // TODO: manage to get the current userId to delete it
     async function onDeleteUser() {
         const userId = user._id;
 
+        setShowDelete(false);
         await deleteUser(userId);
 
         const deletedUserIndex = users.findIndex((user) => user._id == userId);
         setUsers((oldUsers) => oldUsers.toSpliced(deletedUserIndex, 1));
-        setShowDelete(false);
     }
 
     function cancelDelete() {

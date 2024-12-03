@@ -18,7 +18,7 @@ export function useCreateEdit(users, setUsers) {
 
         setIsCreate(false);
 
-        const user = await getUserById(userId);
+        const user = users.find((user) => user._id == userId);
         setShowAdd(true);
         setUser(user);
     }
@@ -27,7 +27,6 @@ export function useCreateEdit(users, setUsers) {
         setShowAdd(false);
     }
 
-    // handlers communicating with api
     async function onSaveNewUser(event) {
         event.preventDefault();
         const formData = new FormData(event.target);

@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { getUserById } from '../api/users.js';
 
-export function useUserInfo() {
+export function useUserInfo(users) {
     const [userData, setUserData] = useState({});
     const [showDetails, setShowDetails] = useState(false);
 
@@ -9,7 +8,7 @@ export function useUserInfo() {
         event.preventDefault();
         const userId = event.currentTarget.parentElement.dataset.id;
 
-        const user = await getUserById(userId);
+        const user = users.find((user) => user._id == userId);
         setUserData(user);
         setShowDetails(true);
     }

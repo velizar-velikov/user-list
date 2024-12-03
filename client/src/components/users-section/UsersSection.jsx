@@ -22,7 +22,7 @@ export default function UsersSection() {
     const { allUsers, isLoading, noUsersYet, hasFetchFailed, setAllUsers } = useLoadUsers();
     const { users, paginator } = usePaginator(allUsers);
 
-    const { userData, showDetails, onInfoPress, onCloseInfoPress } = useUserInfo();
+    const { userData, showDetails, onInfoPress, onCloseInfoPress } = useUserInfo(users);
     const { editUserData, showAdd, isCreate, onAddHandler, onEditPress, onCloseHandler, onSaveNewUser, onSaveEditedUser } =
         useCreateEdit(allUsers, setAllUsers);
     const { showDelete, onDeletePress, onDeleteUser, cancelDelete } = useDelete(allUsers, setAllUsers);
