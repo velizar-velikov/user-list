@@ -13,6 +13,18 @@ import Pagination from '../pagination/Pagination.jsx';
 
 import { createUser, deleteUser, getAllUsers, getUserById, searchUsers, updateUser } from '../../api/users.js';
 import { createUserObject } from '../../util/createUserObject.js';
+
+export default function UsersSection({ onAddHandler }) {
+    const [users, setUsers] = useState([]);
+    const [userData, setUserData] = useState({});
+import { useUserInfo } from '../../hooks/useUserInfo.jsx';
+import Delete from '../delete/Delete.jsx';
+import { useDelete } from '../../hooks/useDelete.jsx';
+
+export default function UsersSection({ onAddHandler }) {
+    const { users, isLoading, noUsersYet, hasFetchFailed, setUsers } = useLoadUsers();
+    const { userData, showDetails, setUserData, onInfoPress, onCloseInfoPress } = useUserInfo();
+    const { showDelete, onDeletePress, onDeleteUser, cancelDelete } = useDelete(users, setUsers);
 import { useUserInfo } from '../../hooks/useUserInfo.jsx';
 import Delete from '../delete/Delete.jsx';
 
@@ -30,15 +42,13 @@ export default function UsersSection({ onAddHandler }) {
     const [isAscendingState, setIsAscendingState] = useState(true);
 
     // show pages handlers
-    function onAddHandler(event) {
-        event.preventDefault();
+    function onAddHandler() {
         setIsCreate(true);
         setUserData({});
         setShowAdd(true);
     }
 
     async function onEditPress(event) {
-        event.preventDefault();
         const userId = event.currentTarget.parentElement.dataset.id;
 
         setIsCreate(false);
@@ -47,6 +57,25 @@ export default function UsersSection({ onAddHandler }) {
         setShowAdd(true);
         setUserData(user);
     }
+
+    async function onInfoPress(event) {
+        event.preventDefault();
+        const userId = event.currentTarget.parentElement.dataset.id;
+
+        const user = await getUserById(userId);
+        setUserData(user);
+        setShowDetails(true);
+    }
+
+    async function onCloseInfoPress(event) {
+        event.preventDefault();
+        setShowDetails(false);
+    }
+
+    function onCloseHandler(event) {
+        event.preventDefault();
+      
+    function onCloseHandler() {
 
     function onCloseHandler(event) {
         setShowAdd(false);
@@ -114,7 +143,11 @@ export default function UsersSection({ onAddHandler }) {
         setUsers(foundUsers);
     }
 
-    // TODO: manage to get the current userId to delete it
+
+    // TODO: show delete confirmation before deleting user
+    async function onDeletePress(event) {
+        event.preventDefault();
+      
     async function onDeleteUser(event) {
         const userId = event.currentTarget.parentElement.dataset.id;
 
@@ -124,6 +157,7 @@ export default function UsersSection({ onAddHandler }) {
         setUsers((oldUsers) => oldUsers.toSpliced(deletedUserIndex, 1));
         setShowDelete(false);
     }
+
 
     function onSortPress(event) {
         event.preventDefault();
@@ -155,6 +189,8 @@ export default function UsersSection({ onAddHandler }) {
                 {noSearchFound && <NoSearchFound />}
 
                 {hasFetchFailed && <ErrorFetch />}
+
+                {showDelete && <Delete onDeleteUser={onDeleteUser} cancelDelete={cancelDelete} />}
 
                 {showDelete && <Delete onDeleteUser={onDeleteUser} setShowDelete={setShowDelete} />}
 

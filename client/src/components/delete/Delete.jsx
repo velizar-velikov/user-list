@@ -1,4 +1,9 @@
+ bugfix/delete-confirmation
+
+export default function Delete() {
+
 export default function Delete({ onDeleteUser, setShowDelete }) {
+ main
     return (
         <div class="overlay">
             <div onClick={() => setShowDelete(false)} class="backdrop"></div>
@@ -6,13 +11,28 @@ export default function Delete({ onDeleteUser, setShowDelete }) {
                 <div class="confirm-container">
                     <header class="headers">
                         <h2>Are you sure you want to delete this account?</h2>
+ bugfix/delete-confirmation
+                        <button class="btn close">
+
+export default function Delete({ onDeleteUser, cancelDelete }) {
+    return (
+        <div className="overlay">
+            <div onClick={cancelDelete} className="backdrop"></div>
+            <div className="modal">
+                <div className="confirm-container">
+                    <header className="headers">
+                        <h2>Are you sure you want to delete this account?</h2>
+                        <button onClick={cancelDelete} className="btn close">
+
+
                         <button onClick={() => setShowDelete(false)} class="btn close">
+
                             <svg
                                 aria-hidden="true"
                                 focusable="false"
                                 data-prefix="fas"
                                 data-icon="xmark"
-                                class="svg-inline--fa fa-xmark"
+                                className="svg-inline--fa fa-xmark"
                                 role="img"
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 320 512"
@@ -24,12 +44,25 @@ export default function Delete({ onDeleteUser, setShowDelete }) {
                             </svg>
                         </button>
                     </header>
-                    <div class="actions">
+                    <div className="actions">
                         <div id="form-actions">
+bugfix/delete-confirmation
+
+                            <button id="action-save" class="btn" type="submit">
+                                Delete
+                            </button>
+                            <button id="action-cancel" class="btn" type="button">
+
+                            <button onClick={onDeleteUser} id="action-save" className="btn" type="submit">
+                                Delete
+                            </button>
+                            <button onClick={cancelDelete} id="action-cancel" className="btn" type="button">
+
                             <button onClick={onDeleteUser} id="action-save" class="btn" type="submit">
                                 Delete
                             </button>
                             <button onClick={() => setShowDelete(false)} id="action-cancel" class="btn" type="button">
+
                                 Cancel
                             </button>
                         </div>
