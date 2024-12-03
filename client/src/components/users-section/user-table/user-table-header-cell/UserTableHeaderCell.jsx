@@ -4,14 +4,6 @@ export default function UserTableHeaderCell({ criteriaName, onSortPress, setIsAs
     const [isAscending, setIsAscending] = useState(false);
     const [isSorted, setIsSorted] = useState(false);
 
-    function sortColumn(event) {
-        setIsAscending(!isAscending);
-        setIsAscendingState(isAscending);
-        setIsSorted(true);
-
-        onSortPress(event);
-    }
-
     const dOptions = {
         dArrowUp:
             'M374.6 201.4l-160-160C208.4 35.1 200.2 32 192 32s-16.38 3.125-22.62 9.375l-160 160c-12.5 12.5-12.5 32.75 0 45.25s32.75 12.5 45.25 0L160 141.2V448c0 17.69 14.33 32 32 32s32-14.31 32-32V141.2l105.4 105.4c12.5 12.5 32.75 12.5 45.25 0S387.1 213.9 374.6 201.4z',
@@ -25,6 +17,15 @@ export default function UserTableHeaderCell({ criteriaName, onSortPress, setIsAs
         dValue = dOptions.dArrowUp;
     }
 
+    // TODO: fix sorting // it is all messed-up
+    function sortColumn(event) {
+        setIsAscending(!isAscending);
+        setIsAscendingState(isAscending);
+        setIsSorted(true);
+
+        onSortPress(event);
+    }
+
     const nameOptions = {
         firstName: 'First name',
         lastName: 'Last name',
@@ -32,6 +33,7 @@ export default function UserTableHeaderCell({ criteriaName, onSortPress, setIsAs
         phoneNumber: 'Phone',
         createdAt: 'Created',
     };
+
     return (
         <th onClick={sortColumn} data-criteria={criteriaName}>
             {nameOptions[criteriaName]}

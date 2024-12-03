@@ -1,14 +1,19 @@
-<<<<<<< Updated upstream
+ bugfix/delete-confirmation
+
 export default function Delete() {
+
+export default function Delete({ onDeleteUser, setShowDelete }) {
+ main
     return (
         <div class="overlay">
-            <div class="backdrop"></div>
+            <div onClick={() => setShowDelete(false)} class="backdrop"></div>
             <div class="modal">
                 <div class="confirm-container">
                     <header class="headers">
                         <h2>Are you sure you want to delete this account?</h2>
+ bugfix/delete-confirmation
                         <button class="btn close">
-=======
+
 export default function Delete({ onDeleteUser, cancelDelete }) {
     return (
         <div className="overlay">
@@ -18,7 +23,10 @@ export default function Delete({ onDeleteUser, cancelDelete }) {
                     <header className="headers">
                         <h2>Are you sure you want to delete this account?</h2>
                         <button onClick={cancelDelete} className="btn close">
->>>>>>> Stashed changes
+
+
+                        <button onClick={() => setShowDelete(false)} class="btn close">
+
                             <svg
                                 aria-hidden="true"
                                 focusable="false"
@@ -38,17 +46,23 @@ export default function Delete({ onDeleteUser, cancelDelete }) {
                     </header>
                     <div className="actions">
                         <div id="form-actions">
-<<<<<<< Updated upstream
+bugfix/delete-confirmation
+
                             <button id="action-save" class="btn" type="submit">
                                 Delete
                             </button>
                             <button id="action-cancel" class="btn" type="button">
-=======
+
                             <button onClick={onDeleteUser} id="action-save" className="btn" type="submit">
                                 Delete
                             </button>
                             <button onClick={cancelDelete} id="action-cancel" className="btn" type="button">
->>>>>>> Stashed changes
+
+                            <button onClick={onDeleteUser} id="action-save" class="btn" type="submit">
+                                Delete
+                            </button>
+                            <button onClick={() => setShowDelete(false)} id="action-cancel" class="btn" type="button">
+
                                 Cancel
                             </button>
                         </div>

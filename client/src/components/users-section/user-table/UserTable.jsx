@@ -1,7 +1,7 @@
 import UserTableHeaderCell from './user-table-header-cell/UserTableHeaderCell.jsx';
 import UserTableRow from './user-table-row/UserTableRow.jsx';
 
-export default function UserTable({ users, onEditPress, onInfoPress, onDeletePress, onSortPress, setIsAscendingState }) {
+export default function UserTable({ users, onEditPress, onInfoPress, setShowDelete, onSortPress, setIsAscendingState }) {
     return (
         <table className="table">
             <thead>
@@ -42,7 +42,7 @@ export default function UserTable({ users, onEditPress, onInfoPress, onDeletePre
                         user={user}
                         onEditPress={onEditPress}
                         onInfoPress={onInfoPress}
-                        onDeletePress={onDeletePress}
+                        setShowDelete={setShowDelete}
                     />
                 ))}
             </tbody>
