@@ -1,18 +1,18 @@
-export default function Delete({ onDeleteUser, setShowDelete }) {
+export default function Delete({ onDeleteUser, cancelDelete }) {
     return (
-        <div class="overlay">
-            <div onClick={() => setShowDelete(false)} class="backdrop"></div>
-            <div class="modal">
-                <div class="confirm-container">
-                    <header class="headers">
+        <div className="overlay">
+            <div onClick={cancelDelete} className="backdrop"></div>
+            <div className="modal">
+                <div className="confirm-container">
+                    <header className="headers">
                         <h2>Are you sure you want to delete this account?</h2>
-                        <button onClick={() => setShowDelete(false)} class="btn close">
+                        <button onClick={cancelDelete} className="btn close">
                             <svg
                                 aria-hidden="true"
                                 focusable="false"
                                 data-prefix="fas"
                                 data-icon="xmark"
-                                class="svg-inline--fa fa-xmark"
+                                className="svg-inline--fa fa-xmark"
                                 role="img"
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 320 512"
@@ -24,12 +24,12 @@ export default function Delete({ onDeleteUser, setShowDelete }) {
                             </svg>
                         </button>
                     </header>
-                    <div class="actions">
+                    <div className="actions">
                         <div id="form-actions">
-                            <button onClick={onDeleteUser} id="action-save" class="btn" type="submit">
+                            <button onClick={onDeleteUser} id="action-save" className="btn" type="submit">
                                 Delete
                             </button>
-                            <button onClick={() => setShowDelete(false)} id="action-cancel" class="btn" type="button">
+                            <button onClick={cancelDelete} id="action-cancel" className="btn" type="button">
                                 Cancel
                             </button>
                         </div>

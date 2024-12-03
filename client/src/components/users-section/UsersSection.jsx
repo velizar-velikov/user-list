@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useLoadUsers } from '../../hooks/useLoadUsers.jsx';
+import { useUserInfo } from '../../hooks/useUserInfo.jsx';
+import { useDelete } from '../../hooks/useDelete.jsx';
 
 import Search from '../search/Search.jsx';
 import LoadingSpinner from './loading-spinner/LoadingSpinner.jsx';
@@ -13,19 +15,19 @@ import Pagination from '../pagination/Pagination.jsx';
 
 import { createUser, deleteUser, getAllUsers, getUserById, searchUsers, updateUser } from '../../api/users.js';
 import { createUserObject } from '../../util/createUserObject.js';
-import { useUserInfo } from '../../hooks/useUserInfo.jsx';
 import Delete from '../delete/Delete.jsx';
 
 export default function UsersSection({ onAddHandler }) {
     const { users, isLoading, noUsersYet, hasFetchFailed, setUsers } = useLoadUsers();
     const { userData, showDetails, setUserData, onInfoPress, onCloseInfoPress } = useUserInfo();
 
+    const { showDelete, onDeletePress, onDeleteUser, cancelDelete } = useDelete(users, setUsers);
+
     const [noSearchFound, setNoSearchFound] = useState(false);
 
     // show pages state
     const [showAdd, setShowAdd] = useState(false);
     const [isCreate, setIsCreate] = useState(false); // if false we show edit page
-    const [showDelete, setShowDelete] = useState(false);
 
     const [isAscendingState, setIsAscendingState] = useState(true);
 
@@ -114,17 +116,6 @@ export default function UsersSection({ onAddHandler }) {
         setUsers(foundUsers);
     }
 
-    // TODO: manage to get the current userId to delete it
-    async function onDeleteUser(event) {
-        const userId = event.currentTarget.parentElement.dataset.id;
-
-        await deleteUser(userId);
-
-        const deletedUserIndex = users.findIndex((user) => user._id == userId);
-        setUsers((oldUsers) => oldUsers.toSpliced(deletedUserIndex, 1));
-        setShowDelete(false);
-    }
-
     function onSortPress(event) {
         event.preventDefault();
         const criteria = event.currentTarget.dataset.criteria;
@@ -156,14 +147,14 @@ export default function UsersSection({ onAddHandler }) {
 
                 {hasFetchFailed && <ErrorFetch />}
 
-                {showDelete && <Delete onDeleteUser={onDeleteUser} setShowDelete={setShowDelete} />}
+                {showDelete && <Delete onDeleteUser={onDeleteUser} cancelDelete={cancelDelete} />}
 
                 <UserTable
                     users={users}
                     onEditPress={onEditPress}
                     onInfoPress={onInfoPress}
                     onCloseInfoPress={onCloseInfoPress}
-                    setShowDelete={setShowDelete}
+                    onDeletePress={onDeletePress}
                     onSortPress={onSortPress}
                     setIsAscendingState={setIsAscendingState}
                 />
