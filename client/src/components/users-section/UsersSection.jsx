@@ -1,4 +1,5 @@
 import { useLoadUsers } from '../../hooks/useLoadUsers.jsx';
+import { usePaginator } from '../../hooks/usePaginator.jsx';
 import { useUserInfo } from '../../hooks/useUserInfo.jsx';
 import { useCreateEdit } from '../../hooks/useCreateEdit.jsx';
 import { useDelete } from '../../hooks/useDelete.jsx';
@@ -18,13 +19,15 @@ import Pagination from '../pagination/Pagination.jsx';
 import Delete from '../delete/Delete.jsx';
 
 export default function UsersSection() {
-    const { users, isLoading, noUsersYet, hasFetchFailed, setUsers, paginator } = useLoadUsers();
+    const { allUsers, isLoading, noUsersYet, hasFetchFailed, setAllUsers } = useLoadUsers();
+    const { users, paginator } = usePaginator(allUsers);
+
     const { userData, showDetails, onInfoPress, onCloseInfoPress } = useUserInfo();
     const { editUserData, showAdd, isCreate, onAddHandler, onEditPress, onCloseHandler, onSaveNewUser, onSaveEditedUser } =
-        useCreateEdit(users, setUsers);
-    const { showDelete, onDeletePress, onDeleteUser, cancelDelete } = useDelete(users, setUsers);
-    const { noSearchFound, onSearchPress } = useSearch(setUsers);
-    const { onSortPress, setIsAscendingState } = useSort(users, setUsers);
+        useCreateEdit(allUsers, setAllUsers);
+    const { showDelete, onDeletePress, onDeleteUser, cancelDelete } = useDelete(allUsers, setAllUsers);
+    const { noSearchFound, onSearchPress } = useSearch(setAllUsers);
+    const { onSortPress, setIsAscendingState } = useSort(users, setAllUsers);
 
     return (
         <section className="card users-container">
