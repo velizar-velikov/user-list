@@ -1,9 +1,9 @@
-export default function Pagination() {
+export default function Pagination({ paginator }) {
     return (
         <div className="pagination position">
             <div className="limits">
                 <span>Items per page:</span>
-                <select name="limit" className="limit">
+                <select onChange={paginator.onChangeItemsPerPage} value={paginator.itemsPerPage} name="limit" className="limit">
                     <option value={5}>5</option>
                     <option value={10}>10</option>
                     <option value={15}>15</option>
@@ -12,7 +12,7 @@ export default function Pagination() {
             </div>
             <p className="pages">1 - 1 of 1</p>
             <div className="actions">
-                <button className="btn" title="First Page">
+                <button onClick={paginator.onGoFirstPage} className="btn" title="First Page">
                     <svg
                         aria-hidden="true"
                         focusable="false"
@@ -29,7 +29,7 @@ export default function Pagination() {
                         ></path>
                     </svg>
                 </button>
-                <button className="btn" title="Previous Page">
+                <button onClick={paginator.onBackPage} className="btn" title="Previous Page">
                     <svg
                         aria-hidden="true"
                         focusable="false"
@@ -46,7 +46,7 @@ export default function Pagination() {
                         ></path>
                     </svg>
                 </button>
-                <button className="btn" title="Next Page">
+                <button onClick={paginator.onForwardPage} className="btn" title="Next Page">
                     <svg
                         aria-hidden="true"
                         focusable="false"
@@ -63,7 +63,7 @@ export default function Pagination() {
                         ></path>
                     </svg>
                 </button>
-                <button className="btn" title="Last Page">
+                <button onClick={paginator.onGoLastPage} className="btn" title="Last Page">
                     <svg
                         aria-hidden="true"
                         focusable="false"

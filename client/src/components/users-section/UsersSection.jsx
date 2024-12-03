@@ -18,7 +18,7 @@ import Pagination from '../pagination/Pagination.jsx';
 import Delete from '../delete/Delete.jsx';
 
 export default function UsersSection() {
-    const { users, isLoading, noUsersYet, hasFetchFailed, setUsers } = useLoadUsers();
+    const { users, isLoading, noUsersYet, hasFetchFailed, setUsers, paginator } = useLoadUsers();
     const { userData, showDetails, onInfoPress, onCloseInfoPress } = useUserInfo();
     const { editUserData, showAdd, isCreate, onAddHandler, onEditPress, onCloseHandler, onSaveNewUser, onSaveEditedUser } =
         useCreateEdit(users, setUsers);
@@ -33,15 +33,10 @@ export default function UsersSection() {
             {/* Table component */}
             <div className="table-wrapper">
                 {/* Overlap components  */}
-
                 {isLoading && <LoadingSpinner />}
-
                 {noUsersYet && <NoUsersYet />}
-
                 {noSearchFound && <NoSearchFound />}
-
                 {hasFetchFailed && <ErrorFetch />}
-
                 {showDelete && <Delete onDeleteUser={onDeleteUser} cancelDelete={cancelDelete} />}
 
                 <UserTable
@@ -71,7 +66,7 @@ export default function UsersSection() {
                 Add new user
             </button>
 
-            <Pagination />
+            <Pagination paginator={paginator} />
         </section>
     );
 }
