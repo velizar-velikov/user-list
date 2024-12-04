@@ -27,7 +27,7 @@ export default function UsersSection() {
         useCreateEdit(allUsers, setAllUsers);
     const { showDelete, onDeletePress, onDeleteUser, cancelDelete } = useDelete(allUsers, setAllUsers);
     const { noSearchFound, onSearchPress } = useSearch(setAllUsers);
-    const { onSortPress, setIsAscendingState } = useSort(users, setAllUsers);
+    const { onSortPress, setIsAscendingState } = useSort(allUsers, setAllUsers);
 
     return (
         <section className="card users-container">
