@@ -1,8 +1,6 @@
 import { formatDate } from '../../util/dateFormatter.js';
 
 export default function UserDetails({ user, onCloseInfoPress }) {
-    // TODO: fix date for createdAt and updatedAt in format "Wednesday, June 28, 2022"
-
     return (
         <div className="overlay">
             <div onClick={onCloseInfoPress} className="backdrop"></div>
@@ -59,10 +57,10 @@ export default function UserDetails({ user, onCloseInfoPress }) {
                             </p>
 
                             <p>
-                                Created on: <strong>{formatDate(user.createdAt)}</strong>
+                                Created on: <strong>{formatDate(user.createdAt, true)}</strong>
                             </p>
                             <p>
-                                Modified on: <strong>{formatDate(user.updatedAt)}</strong>
+                                Modified on: <strong>{formatDate(user.updatedAt, true)}</strong>
                             </p>
                         </div>
                     </div>
