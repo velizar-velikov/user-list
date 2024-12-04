@@ -1,4 +1,26 @@
+/**
+ * @typedef {Object} Paginator
+ * @property {number} itemsCount
+ * @property {number} pageStartItem
+ * @property {number} pageEndItem
+ * @property {number} itemsPerPage
+ */
+
+/**
+ * @typedef {{paginator: Paginator}} PaginationProps
+ */
+
+/**
+ *
+ * @param {PaginationProps} props
+ * @returns
+ */
 export default function Pagination({ paginator }) {
+    const firstPageButtonClassName = paginator.pageStartItem == 1 ? 'btn inactive' : 'btn';
+    const previousPageButtonClassName = paginator.pageStartItem == 1 ? 'btn inactive' : 'btn';
+    const nextPageButtonClassName = paginator.pageEndItem == paginator.itemsCount ? 'btn inactive' : 'btn';
+    const lastPageButtonClassName = paginator.pageEndItem == paginator.itemsCount ? 'btn inactive' : 'btn';
+
     return (
         <div className="pagination position">
             <div className="limits">
@@ -10,9 +32,9 @@ export default function Pagination({ paginator }) {
                     <option value={20}>20</option>
                 </select>
             </div>
-            <p className="pages">1 - 1 of 1</p>
+            <p className="pages">{`${paginator.pageStartItem} - ${paginator.pageEndItem} of ${paginator.itemsCount}`}</p>
             <div className="actions">
-                <button onClick={paginator.onGoFirstPage} className="btn" title="First Page">
+                <button onClick={paginator.onGoFirstPage} className={firstPageButtonClassName} title="First Page">
                     <svg
                         aria-hidden="true"
                         focusable="false"
@@ -29,7 +51,7 @@ export default function Pagination({ paginator }) {
                         ></path>
                     </svg>
                 </button>
-                <button onClick={paginator.onBackPage} className="btn" title="Previous Page">
+                <button onClick={paginator.onBackPage} className={previousPageButtonClassName} title="Previous Page">
                     <svg
                         aria-hidden="true"
                         focusable="false"
@@ -46,7 +68,7 @@ export default function Pagination({ paginator }) {
                         ></path>
                     </svg>
                 </button>
-                <button onClick={paginator.onForwardPage} className="btn" title="Next Page">
+                <button onClick={paginator.onForwardPage} className={nextPageButtonClassName} title="Next Page">
                     <svg
                         aria-hidden="true"
                         focusable="false"
@@ -63,7 +85,7 @@ export default function Pagination({ paginator }) {
                         ></path>
                     </svg>
                 </button>
-                <button onClick={paginator.onGoLastPage} className="btn" title="Last Page">
+                <button onClick={paginator.onGoLastPage} className={lastPageButtonClassName} title="Last Page">
                     <svg
                         aria-hidden="true"
                         focusable="false"

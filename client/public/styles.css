@@ -922,6 +922,14 @@ ul {
   background-color: rgb(231, 108, 108);
 }
 
+/* pagination arrows */
+button[title="First Page"].inactive,
+button[title="Previous Page"].inactive,
+button[title="Next Page"].inactive,
+button[title="Last Page"].inactive {
+  opacity: 0.3;
+}
+
 /* Footer styles */
 .footer {
   text-align: center;
