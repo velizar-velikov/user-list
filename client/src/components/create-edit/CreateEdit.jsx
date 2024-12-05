@@ -1,15 +1,21 @@
 import { useState } from 'react';
 
 export default function CreateEdit({ user, onCloseHandler, onSaveNewUser, onSaveEditedUser, isCreate }) {
-    const [firstName, setFirstName] = useState(user.firstName);
-    const [lastName, setLastName] = useState(user.lastName);
-    const [email, setEmail] = useState(user.email);
-    const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
-    const [imageUrl, setImageUrl] = useState(user.imageUrl);
-    const [country, setCountry] = useState(user.address?.country);
-    const [city, setCity] = useState(user.address?.city);
-    const [street, setStreet] = useState(user.address?.street);
-    const [streetNumber, setStreetNumber] = useState(user.address?.streetNumber);
+    const [inputValues, setInputValues] = useState({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        imageUrl: user.imageUrl,
+        country: user.address?.country,
+        city: user.address?.city,
+        street: user.address?.street,
+        streetNumber: user.address?.streetNumber,
+    });
+
+    function onInputChange(e) {
+        setInputValues((oldInputValues) => ({ ...oldInputValues, [e.target.name]: e.target.value }));
+    }
 
     // TODO: think of e solution that does not render create form with undefined values(omits the value attr altogether)
 
@@ -47,11 +53,11 @@ export default function CreateEdit({ user, onCloseHandler, onSaveNewUser, onSave
                                         <i className="fa-solid fa-user"></i>
                                     </span>
                                     <input
-                                        onChange={(event) => setFirstName(event.target.value)}
+                                        onChange={onInputChange}
                                         id="firstName"
                                         name="firstName"
                                         type="text"
-                                        value={firstName}
+                                        value={inputValues.firstName}
                                     />
                                 </div>
                             </div>
@@ -62,11 +68,11 @@ export default function CreateEdit({ user, onCloseHandler, onSaveNewUser, onSave
                                         <i className="fa-solid fa-user"></i>
                                     </span>
                                     <input
-                                        onChange={(event) => setLastName(event.target.value)}
+                                        onChange={onInputChange}
                                         id="lastName"
                                         name="lastName"
                                         type="text"
-                                        value={lastName}
+                                        value={inputValues.lastName}
                                     />
                                 </div>
                             </div>
@@ -80,11 +86,11 @@ export default function CreateEdit({ user, onCloseHandler, onSaveNewUser, onSave
                                         <i className="fa-solid fa-envelope"></i>
                                     </span>
                                     <input
-                                        onChange={(event) => setEmail(event.target.value)}
+                                        onChange={onInputChange}
                                         id="email"
                                         name="email"
                                         type="text"
-                                        value={email}
+                                        value={inputValues.email}
                                     />
                                 </div>
                             </div>
@@ -95,11 +101,11 @@ export default function CreateEdit({ user, onCloseHandler, onSaveNewUser, onSave
                                         <i className="fa-solid fa-phone"></i>
                                     </span>
                                     <input
-                                        onChange={(event) => setPhoneNumber(event.target.value)}
+                                        onChange={onInputChange}
                                         id="phoneNumber"
                                         name="phoneNumber"
                                         type="text"
-                                        value={phoneNumber}
+                                        value={inputValues.phoneNumber}
                                     />
                                 </div>
                             </div>
@@ -112,11 +118,11 @@ export default function CreateEdit({ user, onCloseHandler, onSaveNewUser, onSave
                                     <i className="fa-solid fa-image"></i>
                                 </span>
                                 <input
-                                    onChange={(event) => setImageUrl(event.target.value)}
+                                    onChange={onInputChange}
                                     id="imageUrl"
                                     name="imageUrl"
                                     type="text"
-                                    value={imageUrl}
+                                    value={inputValues.imageUrl}
                                 />
                             </div>
                         </div>
@@ -129,11 +135,11 @@ export default function CreateEdit({ user, onCloseHandler, onSaveNewUser, onSave
                                         <i className="fa-solid fa-map"></i>
                                     </span>
                                     <input
-                                        onChange={(event) => setCountry(event.target.value)}
+                                        onChange={onInputChange}
                                         id="country"
                                         name="country"
                                         type="text"
-                                        value={country}
+                                        value={inputValues.country}
                                     />
                                 </div>
                             </div>
@@ -143,13 +149,7 @@ export default function CreateEdit({ user, onCloseHandler, onSaveNewUser, onSave
                                     <span>
                                         <i className="fa-solid fa-city"></i>
                                     </span>
-                                    <input
-                                        onChange={(event) => setCity(event.target.value)}
-                                        id="city"
-                                        name="city"
-                                        type="text"
-                                        value={city}
-                                    />
+                                    <input onChange={onInputChange} id="city" name="city" type="text" value={inputValues.city} />
                                 </div>
                             </div>
                         </div>
@@ -162,11 +162,11 @@ export default function CreateEdit({ user, onCloseHandler, onSaveNewUser, onSave
                                         <i className="fa-solid fa-map"></i>
                                     </span>
                                     <input
-                                        onChange={(event) => setStreet(event.target.value)}
+                                        onChange={onInputChange}
                                         id="street"
                                         name="street"
                                         type="text"
-                                        value={street}
+                                        value={inputValues.street}
                                     />
                                 </div>
                             </div>
@@ -177,11 +177,11 @@ export default function CreateEdit({ user, onCloseHandler, onSaveNewUser, onSave
                                         <i className="fa-solid fa-house-chimney"></i>
                                     </span>
                                     <input
-                                        onChange={(event) => setStreetNumber(event.target.value)}
+                                        onChange={onInputChange}
                                         id="streetNumber"
                                         name="streetNumber"
                                         type="text"
-                                        value={streetNumber}
+                                        value={inputValues.streetNumber}
                                     />
                                 </div>
                             </div>

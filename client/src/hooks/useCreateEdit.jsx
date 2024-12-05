@@ -1,15 +1,40 @@
 import { useState } from 'react';
-import { createUser, getUserById, updateUser } from '../api/users.js';
+import { createUser, updateUser } from '../api/users.js';
 import { createUserObject } from '../util/createUserObject.js';
 
 export function useCreateEdit(users, setUsers) {
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({
+        firstName: '',
+        lastName: '',
+        emial: '',
+        phoneNumber: '',
+        imageUrl: '',
+        adress: {
+            city: '',
+            country: '',
+            street: '',
+            streetNumber: '',
+        },
+    });
     const [showAdd, setShowAdd] = useState(false);
     const [isCreate, setIsCreate] = useState(false); // if false we show edit page
 
     function onAddHandler() {
         setIsCreate(true);
-        setUser({});
+
+        setUser({
+            firstName: '',
+            lastName: '',
+            emial: '',
+            phoneNumber: '',
+            imageUrl: '',
+            adress: {
+                city: '',
+                country: '',
+                street: '',
+                streetNumber: '',
+            },
+        });
         setShowAdd(true);
     }
 
